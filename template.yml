@@ -20,6 +20,7 @@ Resources:
         IndexDocument: resume.html
         ErrorDocument: error.html
     DeletionPolicy: Retain
+
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -52,6 +53,12 @@ Resources:
         # Give Read Permissions to the ResumeTable
         - DynamoDBReadPolicy:
             TableName: !Ref ResumeTable
+      AutoPublishAlias: prod
+      DeploymentPreference:
+        Type: AllAtOnce
+        # Hooks:
+        #   PreTraffic: !Ref beforeAllowTrafficHookLambda
+        #   PostTraffic: !Ref afterAllowTrafficHookLambda
       Environment:
         Variables:
           RESUME_TABLE: !Ref ResumeTable

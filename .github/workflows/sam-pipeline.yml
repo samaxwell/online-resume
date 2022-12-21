@@ -5,15 +5,20 @@ on:
     branches:
       - main
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    env: 
+      nodeVersion: 18
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - name: Setup Node $nodeVersion
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      - uses: aws-actions/setup-sam@v1
-      - uses: aws-actions/configure-aws-credentials@v1
+          node-version: $nodeVersion
+      - name: Install SAM CLI
+        uses: aws-actions/setup-sam@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16 # use node 16 as github actions is deprecated node 12
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -23,5 +28,5 @@ jobs:
 
 # Run Unit tests- Specify unit tests here 
 
-# sam deploy
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name online-resume-app --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-tprtnk5iw2ya --capabilities CAPABILITY_IAM --region us-east-2
+# sam deploy (uses samconfig.toml for stackname and s3 bucket, otherwise would need to specify params) 
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM --region us-east-2

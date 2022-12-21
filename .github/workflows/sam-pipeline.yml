@@ -7,14 +7,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env: 
-      nodeVersion: 18
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Node $nodeVersion
+      - name: Setup Node 18
         uses: actions/setup-node@v3
         with:
-          node-version: $nodeVersion
+          node-version: 18
       - name: Install SAM CLI
         uses: aws-actions/setup-sam@v2
       - name: Configure AWS Credentials

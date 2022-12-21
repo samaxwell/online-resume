@@ -10,5 +10,13 @@
     
     <p>I'm just a resume :)</p>
 
+    <script>
+        const webEndpoint = 'https://66sosrzqd1.execute-api.us-east-2.amazonaws.com/Prod/';
+
+        fetch(webEndpoint, { method: "POST" })
+        .then(data => { return data.json() } )
+        .then(res => { console.log(res) } )
+    </script>
+
 </body>
 </html>

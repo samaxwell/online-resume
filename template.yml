@@ -1,0 +1,119 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  My online resume
+
+Transform:
+  - AWS::Serverless-2016-10-31
+
+Resources:
+
+  # Public S3 to hold resume
+  myResumeS3Bucket: 
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: sean.resume.public
+      Tags:
+        - Key: project
+          Value: online-resume
+      WebsiteConfiguration: 
+        IndexDocument: resume.html
+        ErrorDocument: error.html
+    DeletionPolicy: Retain
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join
+            - ''
+            - - 'arn:aws:s3:::'
+              - !Ref myResumeS3Bucket
+              - /*
+      Bucket: !Ref myResumeS3Bucket
+
+  getByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-by-id.getByIdHandler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: allows to get select db properties 
+      Policies:
+        # Give Read Permissions to the ResumeTable
+        - DynamoDBReadPolicy:
+            TableName: !Ref ResumeTable
+      Environment:
+        Variables:
+          RESUME_TABLE: !Ref ResumeTable
+          RESUME_TABLE_VIEW_COUNT: view-count
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /{id}
+            Method: GET
+
+  updateViewCount:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/update-view-count.putViewCountHandler
+      Runtime: nodejs18.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: Updates and returns page view count
+      Policies:
+        # Give Create/Read/Update/Delete Permissions to the ResumeTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumeTable
+      Environment:
+        Variables:
+          RESUME_TABLE: !Ref ResumeTable
+          RESUME_TABLE_VIEW_COUNT: view-count
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
+
+  # DynamoDB table to store view counts 
+  ResumeTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 2
+        WriteCapacityUnits: 2
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt 
+      - myResumeS3Bucket
+      - WebsiteURL
+    Description: URL for Resume hosted on S3
+  mys2bucketSecureURL:
+    Value: !Join
+      - ''
+      - -  'https://'
+        -  !GetAtt 
+          - myResumeS3Bucket
+          - DomainName
+    Description: Name of the S3 bucket hosting the resume
+
+  WebEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

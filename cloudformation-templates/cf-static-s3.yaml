@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  S3 for resume
+Resources:
+
+  mys3bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      BucketName: sean.resume.public
+      Tags:
+        - Key: project
+          Value: online-resume
+      WebsiteConfiguration: 
+        IndexDocument: resume.html
+        ErrorDocument: error.html
+    DeletionPolicy: Retain
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join
+            - ''
+            - - 'arn:aws:s3:::'
+              - !Ref mys3bucket
+              - /*
+      Bucket: !Ref mys3bucket
+
+Outputs:
+  WebsiteURL:
+    Value: !GetAtt 
+      - mys3bucket
+      - WebsiteURL
+    Description: URL for Resume hosted on S3
+  mys2bucketSecureURL:
+    Value: !Join
+      - ''
+      - -  'https://'
+        -  !GetAtt 
+          - mys3bucket
+          - DomainName
+    Description: Name of the S3 bucket hosting the resume

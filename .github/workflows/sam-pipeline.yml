@@ -9,22 +9,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup Node 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - name: Install SAM CLI
         uses: aws-actions/setup-sam@v2
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16 # use node 16 as github actions is deprecated node 12
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
+
       # sam build 
-      - run: sam build --use-container
+      - name: Build Serverless project
+        run: sam build --use-container
 
-# Run Unit tests- Specify unit tests here 
+      # Run Unit tests- Specify unit tests here 
 
-# sam deploy (uses samconfig.toml for stackname and s3 bucket, otherwise would need to specify params) 
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM --region us-east-2
+      # sam deploy (uses samconfig.toml for stackname and s3 bucket, otherwise would need to specify params) 
+      - name: Deploy
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM --region us-east-2
+      
+      # upload resume to s3 bucket (may need to update API url if new stack)
+      - name: Upload resume
+        run: ls -l && aws s3 cp src/resume.html s3://sean.resume.public

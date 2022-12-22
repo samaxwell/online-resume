@@ -36,5 +36,5 @@ jobs:
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM --region us-east-2
       
       # upload resume to s3 bucket (may need to update API url if new stack)
-      - name: Upload resume
-        run: ls -l && aws s3 cp src/resume.html s3://sean.resume.public
+      - name: Upload resume files
+        run:  aws s3 cp src/resume.* s3://sean.resume.public

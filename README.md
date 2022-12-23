@@ -1,3 +1,5 @@
+[![Deploy online-resume](https://github.com/samaxwell/online-resume/actions/workflows/sam-pipeline.yml/badge.svg)](https://github.com/samaxwell/online-resume/actions/workflows/sam-pipeline.yml)
+
 # online-resume
 
 This project contains source code and supporting files for a serverless application that you can deploy with the AWS Serverless Application Model (AWS SAM) command line interface (CLI). It includes the following files and folders:

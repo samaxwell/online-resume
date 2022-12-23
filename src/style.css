@@ -1,4 +1,11 @@
 
 .name {
+    font-family: 'Times New Roman', Times, serif;
     font-weight: 600;
+    font-size: 2.5em;
+}
+
+.my-role {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
 }

@@ -12,7 +12,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: PublicRead
-      BucketName: sean.resume.public
+      BucketName: seanmaxwell-resume.com
       Tags:
         - Key: project
           Value: online-resume

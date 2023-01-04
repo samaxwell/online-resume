@@ -18,6 +18,9 @@ jobs:
       - name: Install SAM CLI
         uses: aws-actions/setup-sam@v2
 
+      - name: sam fix https://github.com/aws/aws-sam-cli/issues/4527
+        run: $(dirname $(readlink $(which sam)))/pip install --force-reinstall "cryptography==38.0.4"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16 # use node 16 as github actions is deprecated node 12
         with:

@@ -1,11 +1,294 @@
+/* 
+    Breakpoints
+        mobile < 560px or 35em
+        tablet < 800px or 50em
+        desktop > tablet
+ */
 
-.name {
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 600;
-    font-size: 2.5em;
+:root {
+    box-sizing: border-box;
+    font-size: calc(1vw + 0.6em);
 }
 
-.my-role {
+@media (min-width: 50em) {
+    :root {
+        font-size: 1.125em;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(64, 64, 64);
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 95%;
+}
+
+@media (min-width: 35em) {
+    .content {
+        max-width: 90%;
+    }
+}
+
+@media (min-width: 69em) {
+    .content {
+        max-width: min(90%, 1200px);
+    }
+}
+
+/***********/
+/* HEADER  */
+/***********/
+.page-header {
+    padding: 0.4em 0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: 35em) {
+    .page-header {
+        padding: 1em 0;
+    }
+}
+
+@media (min-width: 50em) {
+    .page-header {
+        padding: 2em 0;
+    }
+}
+
+.page-header>h1 {
     font-family: 'Times New Roman', Times, serif;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    ;
+    margin: 0.2em 0;
+}
+
+.page-header div {
+    font-size: 1.2em;
+}
+
+/***********/
+/* SOCIALS */
+/***********/
+.socials {
+    margin: 1em 2em 0 2em;
+    display: flex;
+    grid-gap: 10px;
+    justify-content: space-between;
+    width: 90%;
+
+}
+
+@media (min-width: 35em) {
+    .socials {
+        margin: 1em 4em 0 4em;
+    }
+}
+
+@media (min-width: 50em) {
+    .socials {
+        margin: 1em 4em 0 4em;
+    }
+}
+
+.socials a:link {
+    color: #1476b8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.socials a:visited {
+    color: #1430b8;
+}
+
+.socials a:hover {
+    text-decoration: underline;
+}
+
+.socials a:active {
+    color: #b81414;
+}
+
+.socials .large-screen {
+    display: none;
+}
+
+/* Display less text for socials when screen is small */
+.socials .github::before {
+    content: "github";
+}
+
+.socials .linkedin::before {
+    content: "linkedIn";
+}
+
+.socials .contact::before {
+    content: "contact";
+}
+
+/* Display more text for socials once screen is large enough */
+@media (min-width: 63em) {
+    .socials .github::before {
+        content: "github/samaxwell";
+    }
+
+    .socials .linkedin::before {
+        content: "linkedin.com/in/sean-maxwell ";
+    }
+
+    .socials .contact::before {
+        content: "sa.maxwell@yahoo.com";
+    }
+}
+
+
+hr {
+    margin: 1em;
+    width: 100%;
+}
+
+
+.mission-statement {
+    width: 95%;
+    text-align: justify;
+}
+
+.mission-statement p {
+    padding: 0 1em 0 1em;
+}
+
+/***********/
+/*  ABOUT  */
+/***********/
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+@media (min-width: 50em) {
+    .about {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 10px;
+    }
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.column h3 {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    letter-spacing: .2em;
+    width: 100%;
+    text-transform: uppercase;
+    background-color: gray;
+    color: #fff;
+}
+
+@media (min-width: 50em) {
+    .column h3 {
+        letter-spacing: .1em;
+    }
+}
+
+.column ul {
+    list-style-type: none;
+    display: inline-block;
+    padding-left: 0em;
+}
+
+
+.column a:link {
+    color: #1476b8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.column a:visited {
+    color: #1430b8;
+}
+
+.column a:hover {
+    text-decoration: underline;
+}
+
+.column a:active {
+    color: #b81414;
+}
+
+
+/**************/
+/* EXPERIENCE */
+/**************/
+.experience {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.experience>h3 {
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+.company {
+    display: flex;
+    flex-direction: column;
+}
+
+.company-name {
+    font-size: 1.5em;
+    margin-bottom: .5em;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: 600;
+    font-size: 1em;
+    font-style: italic;
+}
+
+.meta p {
+    margin: 0;
+}
+
+.description {
+    text-align: justify;
+}
+
+
+/*********/
+/* Utils */
+/*********/
+.emphasis {
     font-style: italic;
 }

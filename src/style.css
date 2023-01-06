@@ -285,6 +285,42 @@ hr {
     text-align: justify;
 }
 
+/* REFERRALS */
+.referrals {
+    font-size: 1.3em;
+}
+
+/* RESUME META */
+.resume-meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    color: lightgray;
+}
+
+@media (min-width: 94.5em) {
+    .resume-meta {
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+}
+.resume-meta a {
+    color: lightgray;
+    font-weight: bold;
+    text-decoration: none;
+}
+.resume-meta a:visited {
+    text-decoration: none;
+  }
+
+.hits {
+    padding-right: 1.5em;
+    display: flex;
+}
+.hits .hit-counter {
+    padding-left: .3em;
+}
 
 /*********/
 /* Utils */

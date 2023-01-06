@@ -39,7 +39,7 @@
                 </a>
             </div>
         </section>
-        
+
         <hr>
 
         <section class="mission-statement">
@@ -225,14 +225,27 @@
             <p class="referrals-text">Referrals available upon request</p>
         </section>
 
+
+        <section class="resume-meta">
+            <div>
+                <span class="hit-counter" id="hit-counter"></span>
+                <i class="fa-sharp fa-solid fa-eye"></i>
+            </div>
+            <div>About</div>
+        </section>
+
     </div>
 
     <script>
-        const webEndpoint = 'https://66sosrzqd1.execute-api.us-east-2.amazonaws.com/Prod/';
-
-        fetch(webEndpoint, { method: "POST" })
-            .then(data => { return data.json() })
-            .then(res => { console.log(res) })
+        const response = fetch('https://66sosrzqd1.execute-api.us-east-2.amazonaws.com/Prod/', {
+            method: "POST",
+            accept: 'application/json'
+        })
+            .then(data => data.json())
+            .then(res => {
+                console.log('views -> ', res);
+                document.getElementById('hit-counter').textContent = res.quantity;
+            });
     </script>
 
 

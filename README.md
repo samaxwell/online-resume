@@ -2,4 +2,7 @@
 
 
 
-https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html#paginators
+Greetings, and welcome to my online resume Github! The purpose of this project (aside from showcasing my amazing resume ;)) is to demonstrate how to do a few things on the cloud!
+
+
+Notes https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/index.html#paginators

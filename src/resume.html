@@ -240,6 +240,16 @@
     </div>
 
     <script>
+
+        // Get or Create cookie
+        // document.cookie = "123abc"
+        let cookie = document.cookie;
+        console.log("cookie");
+        console.log(cookie);
+        console.log("/cookie");
+        
+
+        // Get View Count
         const response = fetch('https://66sosrzqd1.execute-api.us-east-2.amazonaws.com/Prod/', {
             method: "POST",
             accept: 'application/json'
